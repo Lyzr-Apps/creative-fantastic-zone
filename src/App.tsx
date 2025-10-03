@@ -115,26 +115,26 @@ export default function App() {
               }}
             >
               <div className="h-full flex flex-col">
-                <h3 className="text-2xl font-bold text-center mb-6" style={{ color: '#7DD8FF', textShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
+                <h3 className="text-2xl font-bold text-center mb-6" style={{ color: '#243143', textShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
                   {card.title}
                 </h3>
 
                 <div className="flex-1 flex items-center justify-center">
                   {card.isLoading ? (
                     <div className="flex flex-col items-center">
-                      <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin mb-4" style={{boxShadow: '0 2px 8px rgba(0,0,0,0.1)'}}></div>
-                      <p className="text-white text-opacity-90 text-sm" style={{textShadow: '0 1px 2px rgba(0,0,0,0.2)'}}>Generating quote...</p>
+                      <div className="w-8 h-8 border-2 border-gray-700 border-t-transparent rounded-full animate-spin mb-4" style={{boxShadow: '0 2px 8px rgba(0,0,0,0.1)'}}></div>
+                      <p className="text-gray-700 text-opacity-90 text-sm" style={{textShadow: '0 1px 2px rgba(0,0,0,0.1)'}}>Generating quote...</p>
                     </div>
                   ) : card.quote ? (
-                    <p className="text-white text-center text-lg leading-relaxed font-medium" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}>
+                    <p className="text-gray-900 text-center text-lg leading-relaxed font-medium" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>
                       {card.quote}
                     </p>
                   ) : (
                     <div className="text-center">
-                      <div className="w-12 h-12 bg-white bg-opacity-30 rounded-full flex items-center justify-center mx-auto mb-4" style={{boxShadow: '0 4px 16px rgba(0,0,0,0.1)'}}>
-                        <span className="text-2xl text-white" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}>{card.id}</span>
+                      <div className="w-12 h-12 bg-gray-700 bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4" style={{boxShadow: '0 4px 16px rgba(0,0,0,0.1)'}}>
+                        <span className="text-2xl text-gray-700" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}>{card.id}</span>
                       </div>
-                      <p className="text-white text-opacity-80" style={{textShadow: '0 1px 2px rgba(0,0,0,0.2)'}}>Click to generate a motivational quote</p>
+                      <p className="text-gray-700 text-opacity-80" style={{textShadow: '0 1px 2px rgba(0,0,0,0.1)'}}>Click to generate a motivational quote</p>
                     </div>
                   )}
                 </div>
