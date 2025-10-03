@@ -92,7 +92,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-8" style={{background: 'linear-gradient(135deg, #F5FAFF 0%, #E8F4FF 100%)'}}>
+    <div className="min-h-screen flex items-center justify-center p-8" style={{background: '#E0E8F0'}}>
       <div className="flex flex-col lg:flex-row gap-8 max-w-6xl w-full">
         {cards.map((card) => (
           <div
@@ -105,36 +105,71 @@ export default function App() {
             aria-label={`${card.title} card, press enter to generate quote`}
           >
             <div
-              className="h-80 w-full lg:w-80 bg-white bg-opacity-30 backdrop-blur-xl rounded-3xl border border-white border-opacity-40 shadow-2xl p-8 transform transition-all duration-500 hover:scale-105 hover:bg-opacity-40 hover:shadow-3xl focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-70 active:scale-95 group-hover:shadow-xl"
+              className="h-80 w-full lg:w-80 bg-gray-200 rounded-3xl p-8 transform transition-all duration-300 hover:scale-105 active:scale-95"
               style={{
-                background: 'linear-gradient(145deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%)',
-                boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.15)',
-                backdropFilter: 'blur(16px)',
-                WebkitBackdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255, 255, 255, 0.4)'
+                background: '#E0E8F0',
+                boxShadow: `
+                  inset -6px -6px 12px rgba(255, 255, 255, 0.7),
+                  inset 6px 6px 12px rgba(0, 0, 0, 0.1),
+                  -8px 8px 16px rgba(0, 0, 0, 0.1)
+                `
               }}
             >
               <div className="h-full flex flex-col">
-                <h3 className="text-2xl font-bold text-center mb-6" style={{ color: '#243143', textShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
+                <h3 className="text-2xl font-bold text-center mb-6" style={{ color: '#243143', textShadow: '-1px -1px 2px rgba(255,255,255,0.8), 1px 1px 2px rgba(0,0,0,0.2)' }}>
                   {card.title}
                 </h3>
 
                 <div className="flex-1 flex items-center justify-center">
                   {card.isLoading ? (
                     <div className="flex flex-col items-center">
-                      <div className="w-8 h-8 border-2 border-gray-700 border-t-transparent rounded-full animate-spin mb-4" style={{boxShadow: '0 2px 8px rgba(0,0,0,0.1)'}}></div>
-                      <p className="text-gray-700 text-opacity-90 text-sm" style={{textShadow: '0 1px 2px rgba(0,0,0,0.1)'}}>Generating quote...</p>
+                      <div
+                        className="w-8 h-8 border-2 border-gray-700 border-t-transparent rounded-full animate-spin mb-4"
+                        style={{
+                          boxShadow: `
+                            inset 2px 2px 4px rgba(0, 0, 0, 0.1),
+                            inset -2px -2px 4px rgba(255, 255, 255, 0.8)
+                          `
+                        }}
+                      ></div>
+                      <p className="text-gray-700" style={{textShadow: '-1px -1px 1px rgba(255,255,255,0.8), 1px 1px 1px rgba(0,0,0,0.1)'}}>Generating quote...</p>
                     </div>
                   ) : card.quote ? (
-                    <p className="text-gray-900 text-center text-lg leading-relaxed font-medium" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>
+                    <p
+                      className="text-gray-800 text-center text-lg leading-relaxed font-medium"
+                      style={{
+                        textShadow: `
+                          -1px -1px 1px rgba(255, 255, 255, 0.8),
+                          1px 1px 1px rgba(0, 0, 0, 0.1)
+                        `
+                      }}
+                    >
                       {card.quote}
                     </p>
                   ) : (
                     <div className="text-center">
-                      <div className="w-12 h-12 bg-gray-700 bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4" style={{boxShadow: '0 4px 16px rgba(0,0,0,0.1)'}}>
-                        <span className="text-2xl text-gray-700" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}>{card.id}</span>
+                      <div
+                        className="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center mx-auto mb-4"
+                        style={{
+                          boxShadow: `
+                            inset 3px 3px 6px rgba(0, 0, 0, 0.1),
+                            inset -3px -3px 6px rgba(255, 255, 255, 0.8)
+                          `
+                        }}
+                      >
+                        <span className="text-2xl text-gray-700" style={{ textShadow: '-1px -1px 1px rgba(255,255,255,0.8), 1px 1px 1px rgba(0,0,0,0.2)' }}>{card.id}</span>
                       </div>
-                      <p className="text-gray-700 text-opacity-80" style={{textShadow: '0 1px 2px rgba(0,0,0,0.1)'}}>Click to generate a motivational quote</p>
+                      <p
+                        className="text-gray-700 text-sm"
+                        style={{
+                          textShadow: `
+                            -1px -1px 1px rgba(255, 255, 255, 0.8),
+                            1px 1px 1px rgba(0, 0, 0, 0.1)
+                          `
+                        }}
+                      >
+                        Click to generate a motivational quote
+                      </p>
                     </div>
                   )}
                 </div>
