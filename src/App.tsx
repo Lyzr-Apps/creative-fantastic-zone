@@ -1,21 +1,139 @@
-import React from 'react'
+import React, { useState } from 'react';
 
-function App() {
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold text-white mb-4">
-          🚀 Ready to Build Something Amazing!
-        </h1>
-        <p className="text-gray-300 text-lg">
-          React + TypeScript + Tailwind CSS
-        </p>
-        <p className="text-gray-400 mt-2 text-sm">
-          This is a blank template - describe your application to get started!
-        </p>
-      </div>
-    </div>
-  )
+interface QuoteResponse {
+  result: {
+    quote: string;
+    metadata: {
+      cardNumber: number;
+      timestamp: string;
+      isOriginal: boolean;
+    };
+  };
+  confidence: number;
+  metadata: {
+    processing_time: string;
+    source: string;
+  };
 }
 
-export default App
+interface Card {
+  id: number;
+  title: string;
+  quote: string;
+  isLoading: boolean;
+}
+
+const AGENT_ID = '68df95d0ed4f542c5e8e100c';
+
+export default function App() {
+  const [cards, setCards] = useState<Card[]>([
+    { id: 1, title: 'Inspiration', quote: '', isLoading: false },
+    { id: 2, title: 'Motivation', quote: '', isLoading: false },
+    { id: 3, title: 'Wisdom', quote: '', isLoading: false }
+  ]);
+
+  const generateRandomId = () => Math.random().toString(36).substring(7);
+
+  const fetchQuote = async (cardNumber: number): Promise<string> => {
+    try {
+      const userId = `${generateRandomId()}@test.com`;
+      const sessionId = `${AGENT_ID}-${generateRandomId()}`;
+
+      const response = await fetch('https://agent-prod.studio.lyzr.ai/v3/inference/chat/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': 'sk-default-obhGvAo6gG9YT9tu6ChjyXLqnw7TxSGY'
+        },
+        body: JSON.stringify({
+          user_id: userId,
+          agent_id: AGENT_ID,
+          session_id: sessionId,
+          message: `Generate motivational quote for card ${cardNumber}`
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch quote');
+      }
+
+      const data = await response.json();
+      const quoteData = data as QuoteResponse;
+
+      return quoteData.result?.quote || 'Stay motivated and keep moving forward!';
+    } catch (error) {
+      console.error('Error fetching quote:', error);
+      return 'Every journey begins with a single step.';
+    }
+  };
+
+  const handleCardClick = async (cardId: number) => {
+    setCards(prev => prev.map(card =>
+      card.id === cardId ? { ...card, isLoading: true } : card
+    ));
+
+    try {
+      const quote = await fetchQuote(cardId);
+      setCards(prev => prev.map(card =>
+        card.id === cardId ? { ...card, quote, isLoading: false } : card
+      ));
+    } catch (error) {
+      setCards(prev => prev.map(card =>
+        card.id === cardId ? { ...card, isLoading: false, quote: 'Click to generate a quote!' } : card
+      ));
+    }
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent, cardId: number) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      handleCardClick(cardId);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center p-8">
+      <div className="flex flex-col lg:flex-row gap-8 max-w-6xl w-full">
+        {cards.map((card) => (
+          <div
+            key={card.id}
+            className="relative group cursor-pointer"
+            onClick={() => handleCardClick(card.id)}
+            onKeyPress={(e) => handleKeyPress(e, card.id)}
+            tabIndex={0}
+            role="button"
+            aria-label={`${card.title} card, press enter to generate quote`}
+          >
+            <div className="h-80 w-full lg:w-80 bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl border border-white border-opacity-20 p-8 transform transition-all duration-300 hover:scale-105 hover:bg-opacity-20 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50">
+              <div className="h-full flex flex-col">
+                <h3 className="text-2xl font-bold text-center mb-6" style={{ color: '#7DD8FF' }}>
+                  {card.title}
+                </h3>
+
+                <div className="flex-1 flex items-center justify-center">
+                  {card.isLoading ? (
+                    <div className="flex flex-col items-center">
+                      <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin mb-4"></div>
+                      <p className="text-white text-opacity-70 text-sm">Generating quote...</p>
+                    </div>
+                  ) : card.quote ? (
+                    <p className="text-white text-center text-lg leading-relaxed font-medium">
+                      {card.quote}
+                    </p>
+                  ) : (
+                    <div className="text-center">
+                      <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span className="text-2xl">{card.id}</span>
+                      </div>
+                      <p className="text-white text-opacity-70">Click to generate a motivational quote</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
