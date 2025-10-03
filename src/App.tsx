@@ -92,7 +92,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center p-8">
+    <div className="min-h-screen flex items-center justify-center p-8" style={{background: 'linear-gradient(135deg, #F5FAFF 0%, #E8F4FF 100%)'}}>
       <div className="flex flex-col lg:flex-row gap-8 max-w-6xl w-full">
         {cards.map((card) => (
           <div
@@ -104,28 +104,37 @@ export default function App() {
             role="button"
             aria-label={`${card.title} card, press enter to generate quote`}
           >
-            <div className="h-80 w-full lg:w-80 bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl border border-white border-opacity-20 p-8 transform transition-all duration-300 hover:scale-105 hover:bg-opacity-20 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50">
+            <div
+              className="h-80 w-full lg:w-80 bg-white bg-opacity-30 backdrop-blur-xl rounded-3xl border border-white border-opacity-40 shadow-2xl p-8 transform transition-all duration-500 hover:scale-105 hover:bg-opacity-40 hover:shadow-3xl focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-70 active:scale-95 group-hover:shadow-xl"
+              style={{
+                background: 'linear-gradient(145deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%)',
+                boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.15)',
+                backdropFilter: 'blur(16px)',
+                WebkitBackdropFilter: 'blur(16px)',
+                border: '1px solid rgba(255, 255, 255, 0.4)'
+              }}
+            >
               <div className="h-full flex flex-col">
-                <h3 className="text-2xl font-bold text-center mb-6" style={{ color: '#7DD8FF' }}>
+                <h3 className="text-2xl font-bold text-center mb-6" style={{ color: '#7DD8FF', textShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
                   {card.title}
                 </h3>
 
                 <div className="flex-1 flex items-center justify-center">
                   {card.isLoading ? (
                     <div className="flex flex-col items-center">
-                      <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin mb-4"></div>
-                      <p className="text-white text-opacity-70 text-sm">Generating quote...</p>
+                      <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin mb-4" style={{boxShadow: '0 2px 8px rgba(0,0,0,0.1)'}}></div>
+                      <p className="text-white text-opacity-90 text-sm" style={{textShadow: '0 1px 2px rgba(0,0,0,0.2)'}}>Generating quote...</p>
                     </div>
                   ) : card.quote ? (
-                    <p className="text-white text-center text-lg leading-relaxed font-medium">
+                    <p className="text-white text-center text-lg leading-relaxed font-medium" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}>
                       {card.quote}
                     </p>
                   ) : (
                     <div className="text-center">
-                      <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span className="text-2xl">{card.id}</span>
+                      <div className="w-12 h-12 bg-white bg-opacity-30 rounded-full flex items-center justify-center mx-auto mb-4" style={{boxShadow: '0 4px 16px rgba(0,0,0,0.1)'}}>
+                        <span className="text-2xl text-white" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}>{card.id}</span>
                       </div>
-                      <p className="text-white text-opacity-70">Click to generate a motivational quote</p>
+                      <p className="text-white text-opacity-80" style={{textShadow: '0 1px 2px rgba(0,0,0,0.2)'}}>Click to generate a motivational quote</p>
                     </div>
                   )}
                 </div>
